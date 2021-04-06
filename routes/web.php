@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PublicacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,10 +16,28 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::view('/', 'welcome', ['name' => 'inicio']);
+// Route::get('/publicacion', function(){
+//   return view('publicacion.index');
+// });
+
+// Route::get('/publicacion/create', [PublicacionController::class, 'create']);
+
+
+Route::get('/', [App\Http\Controllers\VehiController::class, 'welcome'])->name('inicio');
+
+// Route::view('/vehiculos', 'vehiculos', ['name' => 'vehiculos']);
+Route::get('/vehiculos', [App\Http\Controllers\VehiController::class, 'vehiculos'])->name('vehiculos');
 
 
 Auth::routes();
 
-Route::get('/publicar', [App\Http\Controllers\HomeController::class, 'index'])->name('publicar');
-Route::get('/publicacion', [App\Http\Controllers\HomeController::class, 'publicacion'])->name('publicacion');
+Route::group(['middleware' => 'auth'], function () {
+
+  // Las rutas que incluyas aquí pasarán por el middleware 'auth'
+  
+  Route::get('/publicar', [App\Http\Controllers\HomeController::class, 'index'])->name('publicar');
+  Route::resource('publicacion', PublicacionController::class);
+
+});
+
+

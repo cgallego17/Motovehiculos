@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Publicacion;
+use App\Models\users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -22,7 +24,15 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
-        return view('home');
+    {   
+        $user = auth()->user()->id;
+        $data['acara'] = Publicacion::where('user_id','=',$user)->get();
+        return view('home')->withAcara($data['acara']);
+
+        $datos['vehi'] = Publicacion::all();
+        return view('vehiculos')->withVehi($datos['vehi']);
     }
+
+  
+
 }

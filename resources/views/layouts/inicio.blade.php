@@ -12,6 +12,8 @@
     href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
     rel="stylesheet">
 
+
+
   <title>Moto Vehiculos | Compra & Venta</title>
 
   <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
@@ -70,7 +72,7 @@
       <div class="row">
         <div class="col-lg-12">
           <p>
-            Copyright © 2020 Company Name
+            Copyright © 2021 CRISTIAN GALLEGO
             - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a>
           </p>
         </div>

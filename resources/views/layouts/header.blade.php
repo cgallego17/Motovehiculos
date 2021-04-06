@@ -21,7 +21,7 @@
                           </a>
 
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('login') }}">Mis Publicaciones</a>
+                            <a class="dropdown-item" href="{{ url('/publicar#publicaciones') }}">Mis Publicaciones</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">

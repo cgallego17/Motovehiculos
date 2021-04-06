@@ -12,8 +12,7 @@
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
               <li><a href="{{ url('/') }}" class="active">Inicio</a></li>
-              <li><a href="cars.html">Vehiculos</a></li>
-              <li><a href="contact.html">Contactenos</a></li>
+              <li><a href="{{ url('/vehiculos') }}">Vehiculos</a></li>
               @if (Route::has('login'))                
                     @auth
                         <li class="nav-item dropdown">
@@ -23,7 +22,7 @@
                           </a>
 
                           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('login') }}">Mis Publicaciones</a>
+                            <a class="dropdown-item" href="{{ url('/publicar#trainers') }}">Mis Publicaciones</a>
 
                             <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                           document.getElementById('logout-form').submit();">
@@ -35,7 +34,7 @@
                             </form>
                           </div>
                         </li>
-                        <a href="{{ url('/publicar') }}" type="button" class="btn btn-primary">Publicar Ahora !</a>
+                        <a href="{{ url('/publicar#crearpublicacion') }}" type="button" class="btn btn-primary">Publicar Ahora !</a>
                     @else
             
                         <li><a data-toggle="modal" data-target="#login">Ingreso-></a></li>
@@ -67,8 +66,17 @@
     <div class="caption">
       <h2>El mejor <em>concesionario de vehiculos </em>de la ciudad!</h2>
       <div class="main-button">
+      @if (Route::has('login'))
+      @auth
+      <a href="{{ url('/publicar#crearpublicacion') }}" type="button" class="btn btn-primary">Publicar Ahora !</a>
+        
+      @endauth
+      @else
+        
         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
           data-target=".bd-example-modal-lg">Publicar Ahora !</button>
+
+      @endif
       </div>
     </div>
   </div>
@@ -81,197 +89,62 @@
     <div class="row">
       <div class="col-lg-6 offset-lg-3">
         <div class="section-heading">
-          <h2>Featured <em>Cars</em></h2>
-          <img src="assets/images/line-dec.png" alt="">
-          <p>Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum
-            massa consequat eu.</p>
+          <h2>Todas las <em>Publicaciones </em></h2>
+          <img src="assets/images/line-dec.png" alt="waves">
+          @if($vehihome->count() == 0)
+            <h2>Aun no tienes publicaciones Realizadas</h2>
+          @else
+          <p>Estas son las 6 ultimas Publicaciones</p>
+          @endif
         </div>
       </div>
+      @foreach( $vehihome as $publica )
+      <div class="col-lg-4">
+        <div class="trainer-item">
+          <div class="image-thumb">
+            <img src="{{ asset('storage'.'/'.$publica->Foto) }}" alt="">
+          </div>
+          <div class="down-content">
+            <span>
+              <sup>$</sup>{{$publica->Precio}}
+            </span>
+
+            <h4>{{$publica->Titulo}}</h4>
+
+            <p>
+              <i class="fa fa-dashboard"></i> {{$publica->Kilometraje}}km &nbsp;&nbsp;&nbsp;
+              <i class="fa fa-cube"></i> {{$publica->Cilindraje}}cc &nbsp;&nbsp;&nbsp;
+              <i class="fa fa-cog"></i> {{$publica->Transmision}} &nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+              <i class="fa fa-calendar"></i> {{$publica->Año}} &nbsp;&nbsp;&nbsp;
+              <i class="fa fa-cube"></i> {{$publica->Cilindraje}}cc &nbsp;&nbsp;&nbsp;
+              <i class="fa fa-paint-brush"></i> {{$publica->Color}} &nbsp;&nbsp;&nbsp;
+            </p>
+            <p>
+            <a href="https://wa.me/{{$publica->Telefono}}?text=Vi%20tu%20publicacion%20--{{$publica->Titulo}}--%20${{$publica->Precio}}%20en%20Motovehiculos.com" class="btn btn-success fa fa-whatsapp" role="button"> Contactar Vendedor</a>
+            </p>
+            <!-- <ul class="social-icons">
+              <li><a href="car-details.html">+ View Car</a></li>
+            </ul> -->
+          </div>
+        </div>
+      </div>
+      @endforeach
     </div>
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="trainer-item">
-          <div class="image-thumb">
-            <img src="assets/images/product-1-720x480.jpg" alt="">
-          </div>
-          <div class="down-content">
-            <span>
-              <del><sup>$</sup>11999 </del> &nbsp; <sup>$</sup>11779
-            </span>
 
-            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-            <p>
-              <i class="fa fa-dashboard"></i> 130 000km &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cube"></i> 1800 cc &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cog"></i> Manual &nbsp;&nbsp;&nbsp;
-            </p>
-
-            <ul class="social-icons">
-              <li><a href="car-details.html">+ View Car</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <div class="trainer-item">
-          <div class="image-thumb">
-            <img src="assets/images/product-2-720x480.jpg" alt="">
-          </div>
-          <div class="down-content">
-            <span>
-              <del><sup>$</sup>11999 </del> &nbsp; <sup>$</sup>11779
-            </span>
-
-            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-            <p>
-              <i class="fa fa-dashboard"></i> 130 000km &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cube"></i> 1800 cc &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cog"></i> Manual &nbsp;&nbsp;&nbsp;
-            </p>
-
-            <ul class="social-icons">
-              <li><a href="car-details.html">+ View Car</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4">
-        <div class="trainer-item">
-          <div class="image-thumb">
-            <img src="assets/images/product-3-720x480.jpg" alt="">
-          </div>
-          <div class="down-content">
-            <span>
-              <del><sup>$</sup>11999 </del> &nbsp; <sup>$</sup>11779
-            </span>
-
-            <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-
-            <p>
-              <i class="fa fa-dashboard"></i> 130 000km &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cube"></i> 1800 cc &nbsp;&nbsp;&nbsp;
-              <i class="fa fa-cog"></i> Manual &nbsp;&nbsp;&nbsp;
-            </p>
-
-            <ul class="social-icons">
-              <li><a href="car-details.html">+ View Car</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
+  </div>
+  <div class="main-button text-center">
+      <a href="{{ url('/vehiculos') }}">Ver Todas Las Publicaciones</a>
     </div>
+</section>
 
     <br>
 
-    <div class="main-button text-center">
-      <a href="cars.html">View Cars</a>
-    </div>
+    
   </div>
 </section>
 @endsection
 
-@section('about')
-  <section class="section section-bg" id="schedule"
-    style="background-image: url(assets/images/about-fullscreen-1-1920x700.jpg)">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading dark-bg">
-            <h2>Read <em>About Us</em></h2>
-            <img src="assets/images/line-dec.png" alt="">
-            <p>Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum
-              massa consequat eu.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="cta-content text-center">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore deleniti voluptas enim! Provident
-              consectetur id earum ducimus facilis, aspernatur hic, alias, harum rerum velit voluptas, voluptate enim!
-              Eos, sunt, quidem.</p>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto nulla quo cum officia laboriosam. Amet
-              tempore, aliquid quia eius commodi, doloremque omnis delectus laudantium dolor reiciendis non nulla!
-              Doloremque maxime quo eum in culpa mollitia similique eius doloribus voluptatem facilis! Voluptatibus,
-              eligendi, illum. Distinctio, non!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  @endsection
-
-  @section('testimonios')
-  <section class="section" id="features">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="section-heading">
-            <h2>Read our <em>Testimonials</em></h2>
-            <img src="assets/images/line-dec.png" alt="waves">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem incidunt alias minima tenetur nemo
-              necessitatibus?</p>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <ul class="features-items">
-            <li class="feature-item">
-              <div class="left-icon">
-                <img src="assets/images/features-first-icon.png" alt="First One">
-              </div>
-              <div class="right-content">
-                <h4>John Doe</h4>
-                <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta numquam maxime voluptatibus,
-                    impedit sed! Necessitatibus repellendus sed deleniti id et!"</em></p>
-              </div>
-            </li>
-            <li class="feature-item">
-              <div class="left-icon">
-                <img src="assets/images/features-first-icon.png" alt="second one">
-              </div>
-              <div class="right-content">
-                <h4>John Doe</h4>
-                <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta numquam maxime voluptatibus,
-                    impedit sed! Necessitatibus repellendus sed deleniti id et!"</em></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="col-lg-6">
-          <ul class="features-items">
-            <li class="feature-item">
-              <div class="left-icon">
-                <img src="assets/images/features-first-icon.png" alt="fourth muscle">
-              </div>
-              <div class="right-content">
-                <h4>John Doe</h4>
-                <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta numquam maxime voluptatibus,
-                    impedit sed! Necessitatibus repellendus sed deleniti id et!"</em></p>
-              </div>
-            </li>
-            <li class="feature-item">
-              <div class="left-icon">
-                <img src="assets/images/features-first-icon.png" alt="training fifth">
-              </div>
-              <div class="right-content">
-                <h4>John Doe</h4>
-                <p><em>"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta numquam maxime voluptatibus,
-                    impedit sed! Necessitatibus repellendus sed deleniti id et!"</em></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <br>
-
-      <div class="main-button text-center">
-        <a href="testimonials.html">Read More</a>
-      </div>
-    </div>
-  </section>
-  @endsection
 
